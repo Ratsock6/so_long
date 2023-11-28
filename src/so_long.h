@@ -6,7 +6,7 @@
 /*   By: aallou-v <aallou-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:29:59 by aallou-v          #+#    #+#             */
-/*   Updated: 2023/11/17 17:44:48 by aallou-v         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:14:13 by aallou-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ typedef struct s_texture
 	mlx_image_t		*img_exit;
 }		t_texture;
 
+typedef struct s_check
+{
+	int	item;
+	int	exit;
+	int	**checked;
+}				t_check;
+
 typedef struct games_s
 {
 	int			exit;
@@ -60,6 +67,7 @@ typedef struct games_s
 	mlx_t		*mlx;
 	t_texture	*img;
 	t_player	*player;
+	t_check		*checker;
 }				t_games_t;
 
 char	*check_error(t_games_t *games);
@@ -70,5 +78,8 @@ void	right(t_games_t *games);
 void	left(t_games_t *games);
 void	check_exit(t_games_t *games, int p_y, int p_x);
 void	exit_games(t_games_t *games);
+int		check_is_possible(t_games_t *games, int y, int x);
+void	initialise_map_checker(t_games_t *games);
+void	free_checker(t_games_t *games);
 
 #endif

@@ -3,7 +3,7 @@ NAME 		= so_long
 CC 			= cc
 RM			= rm -f
 
-CFLAGS 		+= -Wall -Wextra -Werror
+CFLAGS 		+= -Wall -Wextra -Werror -g
 CLINKS		= -ldl -lglfw -pthread -lm
 
 MLX			= minilibx
@@ -16,7 +16,8 @@ SRC 		= src/main.c \
 				src/checker.c \
 				src/game.c \
 				src/player.c \
-				src/player2.c
+				src/player2.c \
+				src/check_is_possible.c
 OBJ 		= $(SRC:.c=.o)
 
 all: $(NAME)

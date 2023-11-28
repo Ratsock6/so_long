@@ -6,7 +6,7 @@
 /*   By: aallou-v <aallou-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 06:05:32 by aallou-v          #+#    #+#             */
-/*   Updated: 2023/11/17 18:38:27 by aallou-v         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:50:12 by aallou-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ void	map_manager(char *line, t_games_t *games)
 		games->map[i] = tmp_map[i];
 		i++;
 	}
-	games->map[count] = ft_strdup(line);
+	games->map[count] = line;
 	games->map[count++ + 1] = 0;
 	games->height = count;
+	free(tmp_map);
 	initialise_start(line, games);
 }
 
@@ -58,6 +59,7 @@ void	initialise(char **argv, t_games_t *games)
 	games->item = 0;
 	games->spawn = 0;
 	games->file_name = ft_strdup(argv[1]);
+	games->map = NULL;
 	while (1)
 	{
 		line = get_next_line(games->fd);
@@ -75,7 +77,17 @@ void	initialise(char **argv, t_games_t *games)
 				games->spawn += 1;
 		}
 	}
-	free(line);
+}
+
+void	free_error(t_games_t *games)
+{
+	int	i;
+
+	i = -1;
+	while (++i < games->height)
+		free(games->map[i]);
+	free(games->map);
+	free(games->file_name);
 }
 
 int	main(int argc, char **argv)
@@ -95,7 +107,7 @@ int	main(int argc, char **argv)
 	error = check_error(&games);
 	if (error)
 	{
-		free(games.map);
+		free_error(&games);
 		ft_printf("Error\n%s\n", error);
 		return (1);
 	}

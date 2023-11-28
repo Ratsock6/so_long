@@ -6,7 +6,7 @@
 /*   By: aallou-v <aallou-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 23:53:44 by aallou-v          #+#    #+#             */
-/*   Updated: 2023/11/17 18:37:49 by aallou-v         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:20:44 by aallou-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	exit_games(t_games_t *games)
 {
 	int	i;
+
 	mlx_delete_image(games->mlx, games->img->img_coin);
 	mlx_delete_texture(games->img->coin);
 	mlx_delete_image(games->mlx, games->img->img_exit);
@@ -33,6 +34,7 @@ void	exit_games(t_games_t *games)
 	free(games->map);
 	free(games->img);
 	free(games->player);
+	free_checker(games);
 }
 
 void	init_texture(t_games_t *games)

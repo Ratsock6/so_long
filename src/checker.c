@@ -6,11 +6,25 @@
 /*   By: aallou-v <aallou-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 06:05:32 by aallou-v          #+#    #+#             */
-/*   Updated: 2023/11/14 01:53:45 by aallou-v         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:14:29 by aallou-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static int	check_char(t_games_t *games)
+{
+	int	i;
+
+	i = 0;
+	while (games->map[i])
+	{
+		if (!ft_isonly(games->map[i], "ECP01\n"))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static int	check_is_close(t_games_t *games)
 {
@@ -60,5 +74,13 @@ char	*check_error(t_games_t *games)
 		return ("The map must be a rectangle");
 	if (!check_is_close(games))
 		return ("The map must be close");
+	if (!check_char(games))
+		return ("The map must contain only : 1 / P / C / E / 0");
+	initialise_map_checker(games);
+	if (!check_is_possible(games, games->start_y, games->start_x))
+	{
+		free_checker(games);
+		return ("The map must be possible");
+	}
 	return (NULL);
 }
